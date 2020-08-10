@@ -129,7 +129,7 @@ def get_category_icon_url(cate_code):
 
 
 class CategoryIcon(models.Model):
-    ci_class = models.CharField('分类图标', max_length=32)
+    ci_class = models.CharField('目录图标', max_length=32)
     ci_name = models.CharField('中文名称', default='', blank=True, max_length=64)
 
     def __str__(self):
@@ -143,15 +143,15 @@ class CategoryIcon(models.Model):
     thumb_show.short_description = format_html('<span  class="text">缩略图</span>')
 
     class Meta:
-        verbose_name = '导航栏类别图标'
-        verbose_name_plural = '导航栏类别图标'
+        verbose_name = '目录图标'
+        verbose_name_plural = '目录图标'
 
 
 class Category(models.Model):
     user = models.ForeignKey(WebUser, on_delete=models.CASCADE, verbose_name='用户')
     cate_class = models.ForeignKey(CategoryIcon, on_delete=models.SET_NULL, blank=True, null=True,
-                                   verbose_name='书签类别图标')
-    cate_name = models.CharField('分类名称', max_length=64)
+                                   verbose_name='目录图标')
+    cate_name = models.CharField('目录名称', max_length=64)
 
     def __str__(self):
         return self.cate_name
@@ -162,8 +162,8 @@ class Category(models.Model):
     cate_img.short_description = format_html('<span  class="text">类别图标</span>')
 
     class Meta:
-        verbose_name = '书签类别'
-        verbose_name_plural = '书签类别'
+        verbose_name = '目录'
+        verbose_name_plural = '目录'
 
 
 class BookMark(models.Model):
