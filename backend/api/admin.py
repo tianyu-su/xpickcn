@@ -64,7 +64,7 @@ class OAuthQQModelAdmin(admin.ModelAdmin):
 @admin.register(CategoryIcon)
 class CategoryIconAdmin(admin.ModelAdmin):
     list_display = ['ci_class', 'thumb_show', 'ci_name']
-    ordering = ('ci_class',)
+    ordering = ('ci_name',)
     list_editable = ['ci_name']
 
 
@@ -118,17 +118,8 @@ class BookMarkAdmin(admin.ModelAdmin):
         """
         Given a model instance save it to the database.
         """
-        # url_pattern = parse.urlparse(obj.url)
-        #
-        # for fill in [url_pattern.hostname, url_pattern.netloc]:
-        #     img_url = f"{url_pattern.scheme}://{fill}/favicon.ico"
-        #     try:
-        #         if requests.head(img_url, timeout=0.5).status_code == 200:
-        #             obj.img = img_url
-        #             break
-        #     except requests.exceptions.Timeout:
-        #         pass
-        obj.user = request.user
+        if not request.user.is_superuser:
+            obj.user = request.user
         obj.save()
         threading.Thread(target=get_website_domain, args=(obj,)).start()
 
