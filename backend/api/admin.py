@@ -1,16 +1,8 @@
-import re
 import threading
-import urllib.parse as parse
 
-from django.contrib import messages
-
-import requests
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin as AuthUserAdmin
-from django.utils.translation import gettext as _, ngettext
 
 from .models import *
-
 # Register your models here.
 from .utils import init_new_web_user, get_website_domain
 
@@ -67,6 +59,12 @@ class CategoryIconAdmin(admin.ModelAdmin):
     ordering = ('ci_name',)
     list_editable = ['ci_name']
 
+    class Media:
+        # js = ('js/vue.min.js',)
+        css = {
+            'all': ('css/fonts/linecons/css/linecons.css',)
+        }
+
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -98,6 +96,10 @@ class CategoryAdmin(admin.ModelAdmin):
             obj.user = request.user
         obj.save()
 
+    class Media:
+        css = {
+            'all': ('css/fonts/linecons/css/linecons.css',)
+        }
 
 @admin.register(BookMark)
 class BookMarkAdmin(admin.ModelAdmin):

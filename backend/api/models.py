@@ -133,12 +133,11 @@ class CategoryIcon(models.Model):
     ci_name = models.CharField('中文名称', default='', blank=True, max_length=64)
 
     def __str__(self):
-        # return self.ci_class[len("linecons-"):]
-        # return self.ci_class
         return self.ci_name
 
     def thumb_show(self):
-        return get_category_icon_url(self.ci_class)
+        # return get_category_icon_url(self.ci_class)
+        return format_html('<span style="font-size: x-large;"><i class="{}"></i></span>', self.ci_class)
 
     thumb_show.short_description = format_html('<span  class="text">缩略图</span>')
 
@@ -157,9 +156,10 @@ class Category(models.Model):
         return self.cate_name
 
     def cate_img(self):
-        return get_category_icon_url(self.cate_class.ci_class)
+        # return get_category_icon_url(self.cate_class.ci_class)
+        return format_html('<span style="font-size: x-large;"><i class="{}"></i></span>', self.cate_class.ci_class)
 
-    cate_img.short_description = format_html('<span  class="text">类别图标</span>')
+    cate_img.short_description = format_html('<span  class="text">目录图标</span>')
 
     class Meta:
         verbose_name = '目录'
