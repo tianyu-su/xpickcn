@@ -94,7 +94,8 @@ class CategoryAdmin(admin.ModelAdmin):
             )
 
     def save_model(self, request, obj, form, change):
-        obj.user = request.user
+        if not request.user.is_superuser:
+            obj.user = request.user
         obj.save()
 
 
