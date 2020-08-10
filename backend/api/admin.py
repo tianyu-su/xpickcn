@@ -62,7 +62,8 @@ class CategoryIconAdmin(admin.ModelAdmin):
     class Media:
         # js = ('js/vue.min.js',)
         css = {
-            'all': ('css/fonts/linecons/css/linecons.css',)
+            # 'all': ('css/fonts/linecons/css/linecons.css',)
+            'all': ('https://cdn.jsdelivr.net/gh/tianyu-su/xpickcn@1.4/dist/static/css/fonts/linecons/css/linecons.css',)
         }
 
 
@@ -98,7 +99,9 @@ class CategoryAdmin(admin.ModelAdmin):
 
     class Media:
         css = {
-            'all': ('css/fonts/linecons/css/linecons.css',)
+            # 'all': ('css/fonts/linecons/css/linecons.css',)
+            'all': (
+            'https://cdn.jsdelivr.net/gh/tianyu-su/xpickcn@1.4/dist/static/css/fonts/linecons/css/linecons.css',)
         }
 
 @admin.register(BookMark)
