@@ -1,7 +1,8 @@
-import six
+import importlib
+import os
+
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import AbstractUser, PermissionsMixin
-from django.core import validators
 from django.db import models
 from django.utils import timezone
 from django.utils.html import format_html
@@ -120,16 +121,24 @@ class OAuthQQModel(models.Model):
         verbose_name_plural = 'QQ授权信息'
 
 
+def get_category_icon_url(cate_code):
+    setting_file = os.environ.get('DJANGO_SETTINGS_MODULE')
+    static_prefix = importlib.import_module(setting_file).STATIC_URL
+    return format_html('<span > <img src="{}" width="20px" height="20px"/></span>',
+                       f'{static_prefix}images/category_icons/{cate_code}.png')
+
+
 class CategoryIcon(models.Model):
     ci_class = models.CharField('分类图标', max_length=32)
+    ci_name = models.CharField('中文名称', default='', blank=True, max_length=64)
 
     def __str__(self):
         # return self.ci_class[len("linecons-"):]
-        return self.ci_class
+        # return self.ci_class
+        return self.ci_name
 
     def thumb_show(self):
-        return format_html(
-            '<span ><i class="{}"></i></span>', self.ci_class)
+        return get_category_icon_url(self.ci_class)
 
     thumb_show.short_description = format_html('<span  class="text">缩略图</span>')
 
@@ -146,6 +155,11 @@ class Category(models.Model):
 
     def __str__(self):
         return self.cate_name
+
+    def cate_img(self):
+        return get_category_icon_url(self.cate_class.ci_class)
+
+    cate_img.short_description = format_html('<span  class="text">类别图标</span>')
 
     class Meta:
         verbose_name = '书签类别'
@@ -166,7 +180,7 @@ class BookMark(models.Model):
         return format_html(
             # '<span > <a href="{}"><img src="{}" width="20px" height="20px"/></a></span>',
             '<span > <img src="{}" width="20px" height="20px"/></span>',
-            self.img, self.img)
+            self.img)
 
     thumb_show.short_description = format_html(
         '<span class="text" >网站图标</span>')

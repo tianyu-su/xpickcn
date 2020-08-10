@@ -63,16 +63,17 @@ class OAuthQQModelAdmin(admin.ModelAdmin):
 
 @admin.register(CategoryIcon)
 class CategoryIconAdmin(admin.ModelAdmin):
-    list_display = ['ci_class']
+    list_display = ['ci_class', 'thumb_show', 'ci_name']
     ordering = ('ci_class',)
+    list_editable = ['ci_name']
 
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     def get_list_display(self, request):
         if request.user.is_superuser:
-            return ['cate_name', 'cate_class', 'user']
-        return ['cate_name', 'cate_class']
+            return ['cate_name', 'cate_img', 'user']
+        return ['cate_name', 'cate_img']
 
     # 非超级管理员只显示自己信息
     def get_queryset(self, request):
