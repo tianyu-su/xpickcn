@@ -17,3 +17,6 @@
 ## 创建超级用户 www
 www也是公共导航
 1. python manage.py createsuperuser
+
+## 复制本机的 dev.py 到服务器的setting文件夹
+## 运行 update_web.sh
