@@ -16,8 +16,6 @@ class DomainFilter(MiddlewareMixin):
             # return HttpResponseForbidden('<h1>bye bye ^-^</h1>')
             return HttpResponseRedirect(f"{request.scheme}://xpick.cn")
 
-
-class UserBasedExceptionMiddleware(object):
     def process_exception(self, request, exception):
         if request.user.is_superuser:
             return technical_500_response(request, *sys.exc_info())
