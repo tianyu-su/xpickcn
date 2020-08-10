@@ -27,3 +27,4 @@ if __name__ == "__main__":
     parser.add_argument('tag_version', type=str, help='release version for cdn')
     args = parser.parse_args()
     main(args.tag_version)
+
