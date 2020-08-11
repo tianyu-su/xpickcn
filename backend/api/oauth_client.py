@@ -1,7 +1,9 @@
 import json
+from urllib.parse import parse_qs, urlencode
+
 import requests
-import urllib
-from urllib.parse import parse_qs,urlencode
+
+
 class OAuthQQ:
     def __init__(self, client_id, client_key, redirect_uri):
         self.client_id = client_id
@@ -18,25 +20,23 @@ class OAuthQQ:
         url = 'https://graph.qq.com/oauth2.0/authorize?%s' % urlencode(params)
         return url
 
-
     def get_access_token(self, code):
         """根据code获取access_token"""
         params = {'grant_type': 'authorization_code',
-                    'client_id': self.client_id,
-                    'client_secret': self.client_key,
-                    'code': code,
-                    'redirect_uri': self.redirect_uri}    # 回调地址    
+                  'client_id': self.client_id,
+                  'client_secret': self.client_key,
+                  'code': code,
+                  'redirect_uri': self.redirect_uri}  # 回调地址
         url = 'https://graph.qq.com/oauth2.0/token?%s' % urlencode(params)
 
         # 访问该网址，获取access_token
         response = requests.get(url).text
-        
+
         result = parse_qs(response, True)
 
         access_token = str(result['access_token'][0])
         self.access_token = access_token
         return access_token
-
 
     def get_open_id(self):
         """获取QQ的OpenID"""

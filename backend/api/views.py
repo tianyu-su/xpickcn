@@ -39,23 +39,23 @@ def qq_check(request):  # 第三方QQ登录，回调函数
     time.sleep(0.05)  # 稍微休息一下，避免发送urlopen的10060错误
     open_id = oauth_qq.get_open_id()
     print(open_id)
+    return HttpResponse('<h1>欢迎你,{}.</h1>'.format(open_id))
 
     # 检查open_id是否存在
-    qq_open_id = OAuthQQModel.objects.filter(u_openid=str(open_id))
-    print(qq_open_id)
+    # qq_open_id = OAuthQQModel.objects.filter(u_openid=str(open_id))
+    # print(qq_open_id)
 
     # 不管是否存在全部返回主页面
     # 不存在：index?open
-
-    if qq_open_id:
-        # 存在则获取对应的用户，并登录
-        user = qq_open_id[0].user.u_website_domain
-        return inner_jump_auth(request, user)
-    else:
-        # 不存在，则跳转到绑定用户页面
-        infos = oauth_qq.get_qq_info()  # 获取用户信息
-        url = '%s?open_id=%s&nickname=%s' % ('/static/bindpage.html', open_id, infos['nickname'])
-        return HttpResponseRedirect(url)
+    # if len(qq_open_id):
+    #     # 存在则获取对应的用户，并登录
+    #     user = qq_open_id[0].user.u_website_domain
+    #     return inner_jump_auth(request, user)
+    # else:
+    #     # 不存在，则跳转到绑定用户页面
+    #     infos = oauth_qq.get_qq_info()  # 获取用户信息
+    #     url = '%s?open_id=%s&nickname=%s' % ('/static/bindpage.html', open_id, infos['nickname'])
+    #     return HttpResponseRedirect(url)
 
 
 def bind_account(request):
