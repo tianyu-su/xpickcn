@@ -36,7 +36,7 @@ class UserAdmin(admin.ModelAdmin):
             )
         else:
             return (
-                ('基本信息', {'fields': ['u_website_domain', 'u_top_frequency']}),
+                ('基本信息', {'fields': ['u_top_frequency']}),
             )
 
     # 非超级管理员只显示自己信息
