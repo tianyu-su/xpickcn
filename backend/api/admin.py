@@ -63,7 +63,8 @@ class CategoryIconAdmin(admin.ModelAdmin):
         # js = ('js/vue.min.js',)
         css = {
             # 'all': ('css/fonts/linecons/css/linecons.css',)
-            'all': ('https://cdn.jsdelivr.net/gh/tianyu-su/xpickcn@1.4/dist/static/css/fonts/linecons/css/linecons.css',)
+            'all': (
+            'https://cdn.jsdelivr.net/gh/tianyu-su/xpickcn@1.4/dist/static/css/fonts/linecons/css/linecons.css',)
         }
 
 
@@ -101,8 +102,9 @@ class CategoryAdmin(admin.ModelAdmin):
         css = {
             # 'all': ('css/fonts/linecons/css/linecons.css',)
             'all': (
-            'https://cdn.jsdelivr.net/gh/tianyu-su/xpickcn@1.4/dist/static/css/fonts/linecons/css/linecons.css',)
+                'https://cdn.jsdelivr.net/gh/tianyu-su/xpickcn@1.4/dist/static/css/fonts/linecons/css/linecons.css',)
         }
+
 
 @admin.register(BookMark)
 class BookMarkAdmin(admin.ModelAdmin):
@@ -140,7 +142,7 @@ class BookMarkAdmin(admin.ModelAdmin):
     def get_fieldsets(self, request, obj=None):
         if request.user.is_superuser:
             return (
-                ('基本信息', {'fields': ['url', 'title', 'desc', 'bm_click_times', 'cate', 'user']}),
+                ('基本信息', {'fields': ['url', 'title', 'desc', 'img', 'bm_click_times', 'cate', 'user']}),
             )
         else:
             return (
