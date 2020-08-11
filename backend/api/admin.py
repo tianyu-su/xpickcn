@@ -129,7 +129,8 @@ class BookMarkAdmin(admin.ModelAdmin):
         if not request.user.is_superuser:
             obj.user = request.user
         obj.save()
-        threading.Thread(target=get_website_domain, args=(obj,)).start()
+        if not change:
+            threading.Thread(target=get_website_domain, args=(obj,)).start()
 
     # 非超级管理员只显示自己信息
     def get_queryset(self, request):
