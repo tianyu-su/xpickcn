@@ -31,7 +31,7 @@ def qq_login(request):
 
 def qq_check(request):  # 第三方QQ登录，回调函数
     """登录之后，会跳转到这里。需要判断code和state"""
-    if request.use.is_authenticated:
+    if request.user.is_authenticated:
         return HttpResponseRedirect(f'/api/admin/')
     request_code = request.GET.get('code')
     oauth_qq = OAuthQQ(settings.QQ_APP_ID, settings.QQ_KEY, settings.QQ_RECALL_URL)
