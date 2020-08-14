@@ -91,6 +91,12 @@ class WebUser(AbstractBaseUser, PermissionsMixin):
             self._group_cache = set([g.name for g in self.groups.all()])
         return group in self._group_cache
 
+    def has_usable_password(self):
+        if self.is_superuser or self.u_website_domain == 'www':
+            return True
+        else:
+            return False
+
     class Meta:
         verbose_name = '用户'
         verbose_name_plural = '用户'
