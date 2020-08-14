@@ -79,7 +79,8 @@ def bind_account(request):
 def inner_jump_auth(request, website_domain):
     user = authenticate(u_website_domain=website_domain, password=USER_DEFAULT_PWD)
     login(request, user)
-    return HttpResponseRedirect(f'{request.scheme}://{website_domain}.xpick.cn:{request.get_port()}/api/admin/')
+    return render(request, 'admin/index.html')
+    # return HttpResponseRedirect(f'/api/admin/')
 
 
 def create_web_user(request, open_id, web_domain):
