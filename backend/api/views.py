@@ -13,7 +13,14 @@ from .oauth_client import OAuthQQ
 from .utils import get_second_domain, init_new_web_user, web_domain_check
 from ..settings.dev import USER_DEFAULT_PWD
 
-index_view = TemplateView.as_view(template_name='index.html')
+
+# index_view = TemplateView.as_view(template_name='index.html')
+
+def index_view(request):
+    if request.user.is_authenticated and request.user.u_website_domain != 'www':
+        return HttpResponseRedirect(f'{request.scheme}://{request.user.u_website_domain}.xpick.cn:{request.get_port()}')
+    else:
+        return render(request, 'index.html')
 
 
 ##############################################################
@@ -79,8 +86,7 @@ def bind_account(request):
 def inner_jump_auth(request, website_domain):
     user = authenticate(u_website_domain=website_domain, password=USER_DEFAULT_PWD)
     login(request, user)
-    return render(request, 'admin/index.html')
-    # return HttpResponseRedirect(f'/api/admin/')
+    return HttpResponseRedirect(f'/api/admin/')
 
 
 def create_web_user(request, open_id, web_domain):
