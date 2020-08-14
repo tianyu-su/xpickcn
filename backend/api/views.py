@@ -47,16 +47,19 @@ def qq_check(request):  # 第三方QQ登录，回调函数
 
     # 不管是否存在全部返回主页面
     # 不存在：index?open
+    infos = oauth_qq.get_qq_info()  # 获取用户信息
+    url = '%s?open_id=%s&nickname=%s' % ('/static/bindpage.html', open_id, infos['nickname'])
     if len(qq_open_id):
         # 存在则获取对应的用户，并登录
-        user = qq_open_id[0].user.u_website_domain
-        return inner_jump_auth(request, user)
+        user = qq_open_id[0].user
+        if user:
+            return inner_jump_auth(request, user.u_website_domain)
+        else:
+            return HttpResponseRedirect(url)
     else:
         # 不存在，则跳转到绑定用户页面
-        infos = oauth_qq.get_qq_info()  # 获取用户信息
         OAuthQQModel.objects.create(u_openid=open_id, u_nick_name=infos['nickname'], u_gender=infos['gender'],
                                     u_img=infos['figureurl_qq_1'])
-        url = '%s?open_id=%s&nickname=%s' % ('/static/bindpage.html', open_id, infos['nickname'])
         return HttpResponseRedirect(url)
 
 
