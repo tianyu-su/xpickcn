@@ -31,6 +31,8 @@ def qq_login(request):
 
 def qq_check(request):  # 第三方QQ登录，回调函数
     """登录之后，会跳转到这里。需要判断code和state"""
+    if request.user:
+        return HttpResponseRedirect(f'/api/admin/')
     request_code = request.GET.get('code')
     oauth_qq = OAuthQQ(settings.QQ_APP_ID, settings.QQ_KEY, settings.QQ_RECALL_URL)
 
@@ -77,7 +79,7 @@ def bind_account(request):
 def inner_jump_auth(request, website_domain):
     user = authenticate(u_website_domain=website_domain, password=USER_DEFAULT_PWD)
     login(request, user)
-    return HttpResponseRedirect(f'/api/admin/')
+    return HttpResponseRedirect(f'{request.scheme}://{website_domain}.xpick.cn:{request.get_port()}/api/admin/')
 
 
 def create_web_user(request, open_id, web_domain):
