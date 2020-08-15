@@ -17,7 +17,8 @@ from ..settings.dev import USER_DEFAULT_PWD
 # index_view = TemplateView.as_view(template_name='index.html')
 
 def index_view(request):
-    if request.user.is_authenticated and request.user.u_website_domain != 'www':
+    if request.user.is_authenticated and (
+            request.user.u_website_domain != 'www' or request.user.u_website_domain != 'xpick'):
         return HttpResponseRedirect(f'{request.scheme}://{request.user.u_website_domain}.xpick.cn:{request.get_port()}')
     else:
         return render(request, 'index.html')
@@ -85,7 +86,7 @@ def bind_account(request):
 
 def inner_jump_auth(request, website_domain):
     user = authenticate(u_website_domain=website_domain, password=USER_DEFAULT_PWD)
-    request.META['HTTP_HOST'] = f'{website_domain}.xpick.cn:{request.get_port()}'
+    # request.META['HTTP_HOST'] = f'{website_domain}.xpick.cn:{request.get_port()}'
     login(request, user)
     return HttpResponseRedirect(f'/api/admin/')
 
