@@ -32,7 +32,7 @@ class UserAdmin(admin.ModelAdmin):
         if request.user.is_superuser:
             return (
                 ('基本信息', {'fields': ['u_website_domain', 'u_top_frequency', 'last_login',
-                                     'u_last_visit_time', 'is_superuser', 'groups', 'user_permissions']}),
+                                     'u_last_visit_time', 'is_superuser', 'groups', 'user_permissions','password']}),
             )
         else:
             return (
