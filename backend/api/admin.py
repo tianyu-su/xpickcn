@@ -20,6 +20,7 @@ class UserAdmin(admin.ModelAdmin):
             obj.save()
             init_new_web_user(obj.u_website_domain, obj)
         else:
+            obj.set_password(obj.password)
             obj.save()
 
     # 实现外键表链接到本页面一起编辑
@@ -32,7 +33,7 @@ class UserAdmin(admin.ModelAdmin):
         if request.user.is_superuser:
             return (
                 ('基本信息', {'fields': ['u_website_domain', 'u_top_frequency', 'last_login',
-                                     'u_last_visit_time', 'is_superuser', 'groups', 'user_permissions','password']}),
+                                     'u_last_visit_time', 'is_superuser', 'groups', 'user_permissions', 'password']}),
             )
         else:
             return (
@@ -64,7 +65,7 @@ class CategoryIconAdmin(admin.ModelAdmin):
         css = {
             # 'all': ('css/fonts/linecons/css/linecons.css',)
             'all': (
-            'https://cdn.jsdelivr.net/gh/tianyu-su/xpickcn@1.4/dist/static/css/fonts/linecons/css/linecons.css',)
+                'https://cdn.jsdelivr.net/gh/tianyu-su/xpickcn@1.4/dist/static/css/fonts/linecons/css/linecons.css',)
         }
 
 
