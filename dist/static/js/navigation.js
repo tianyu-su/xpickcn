@@ -108,7 +108,7 @@ let SideBar = Vue.extend({
                         <a target="_blank" href="oauth/qq/login/">
 <!--                        <a href="api/admin/">-->
                             <i class="linecons-user"></i>
-                            <span class="title">导航管理</span>
+                            <span class="title">自定义</span>
                         </a>
                         </li>
 
