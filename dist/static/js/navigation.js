@@ -105,8 +105,8 @@ let SideBar = Vue.extend({
     template: `
                         <ul id="main-menu" v-cloak class="main-menu">
                          <li>
-<!--                        <a href="oauth/qq/login/">-->
-                        <a href="api/admin/">
+                        <a target="_blank" href="oauth/qq/login/">
+<!--                        <a href="api/admin/">-->
                             <i class="linecons-user"></i>
                             <span class="title">导航管理</span>
                         </a>
